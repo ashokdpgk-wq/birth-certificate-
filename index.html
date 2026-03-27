@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>EPIC Card System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+background:#ddd;
+font-family:'Noto Sans Bengali', Arial;
+padding:20px;
+}
+
+/* FORM */
+.form{
+background:#fff;
+padding:10px;
+margin-bottom:15px;
+border:2px solid #000;
+}
+.form input{
+margin:5px;
+padding:6px;
+font-weight:bold;
+}
+
+/* CARD AREA */
+.row{
+display:flex;
+gap:20px;
+border-top:2px dashed #888;
+border-bottom:2px dashed #888;
+padding:20px 0;
+}
+
+/* CARD */
+.card{
+width:48%;
+height:300px;
+position:relative;
+border-radius:6px;
+overflow:hidden;
+box-shadow:0 2px 8px rgba(0,0,0,0.3);
+background-size:100% 100%;
+}
+
+/* BACKGROUND */
+.front{background:url('1.jpg') no-repeat center/cover;}
+.back{background:url('2.jpg') no-repeat center/cover;}
+
+/* BIG PHOTO */
+.photoFront{
+position:absolute;
+left:12px;
+top:55px;
+width:95px;
+height:110px;
+border:2px solid #000;
+object-fit:cover;
+}
+
+/* SMALL PHOTO */
+.photoSmall{
+position:absolute;
+top:25px;
+right:12px;
+width:45px;
+height:50px;
+border:1px solid #000;
+object-fit:cover;
+filter:grayscale(100%);
+}
+
+/* TEXT */
+.info{
+position:absolute;
+left:115px;
+top:55px;
+font-size:13px;
+line-height:1.4;
+}
+
+/* EPIC */
+.epic{
+position:absolute;
+top:35px;
+left:15px;
+font-weight:bold;
+font-size:15px;
+}
+
+/* FOOT */
+.footer{
+position:absolute;
+bottom:5px;
+left:10px;
+font-size:12px;
+}
+
+/* BACK QR */
+.qr{
+position:absolute;
+left:15px;
+top:65px;
+width:95px;
+height:95px;
+}
+
+/* ADDRESS */
+.address{
+position:absolute;
+top:25px;
+left:120px;
+width:190px;
+font-size:12px;
+line-height:1.4;
+word-wrap:break-word;
+}
+
+/* OFFICER */
+.officer{
+position:absolute;
+top:125px;
+left:120px;
+font-size:12px;
+}
+
+/* DOWNLOAD */
+.download{
+position:absolute;
+top:150px;
+left:120px;
+font-size:12px;
+}
+
+/* BAR */
+.bar{
+position:absolute;
+bottom:0;
+width:100%;
+height:28px;
+background:linear-gradient(to right,#f4b183,#fdebd0);
+display:flex;
+justify-content:space-around;
+align-items:center;
+font-size:12px;
+}
+
+/* PRINT */
+@media print{
+body *{visibility:hidden;}
+#printArea, #printArea *{visibility:visible;}
+#printArea{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- FORM -->
+<div class="form">
+<input placeholder="Name" oninput="setVal('name',this.value)">
+<input placeholder="Father/Husband" oninput="setVal('father',this.value)">
+<input placeholder="Gender" oninput="setVal('gender',this.value)">
+<input placeholder="DOB" oninput="setVal('dob',this.value)">
+<input placeholder="Address" oninput="setVal('address',this.value)">
+<input placeholder="EPIC No" oninput="setVal('epic',this.value)">
+<br>
+📷 <input type="file" onchange="loadPhoto(event)">
+<button onclick="printPage()">🖨 Print</button>
+</div>
+
+<!-- CARD -->
+<div class="row" id="printArea">
+
+<!-- FRONT -->
+<div class="card front">
+
+<div class="epic" id="epic">ZMJ2055002</div>
+
+<img id="photoFront" class="photoFront">
+<img id="photoSmall" class="photoSmall">
+
+<div class="info">
+<b id="name">Your Name</b><br>
+Name: <span id="name2">Your Name</span><br><br>
+
+Father/Husband: <span id="father">---</span><br>
+Gender: <span id="gender">---</span><br>
+DOB: <span id="dob">---</span>
+</div>
+
+<div class="footer">
+e-Electors Photo Identity Card
+</div>
+
+</div>
+
+<!-- BACK -->
+<div class="card back">
+
+<canvas id="qr" class="qr"></canvas>
+
+<div class="address" id="address">
+Your full address here
+</div>
+
+<div class="officer">
+Electoral Registration Officer
+</div>
+
+<div class="download">
+Download Date: 2024
+</div>
+
+<div class="bar">
+<span>📞 1950</span>
+<span>🌐 ceowestbengal.nic.in</span>
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.0/qrcode.min.js"></script>
+
+<script>
+
+function setVal(id,val){
+
+// multiline support
+if(id=="address"){
+document.getElementById(id).innerHTML = val.replace(/\n/g,"<br>");
+}else{
+document.getElementById(id).innerText = val;
+}
+
+// name double update
+if(id=="name"){
+document.getElementById("name2").innerText = val;
+}
+
+updateQR();
+}
+
+// QR update
+function updateQR(){
+let data = document.getElementById("epic").innerText;
+QRCode.toCanvas(document.getElementById("qr"), data);
+}
+
+// PHOTO LOAD
+function loadPhoto(e){
+let file = URL.createObjectURL(e.target.files[0]);
+photoFront.src = file;
+photoSmall.src = file;
+}
+
+// PRINT
+function printPage(){
+window.print();
+}
+
+</script>
+
+</body>
+</html>
