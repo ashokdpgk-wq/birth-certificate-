@@ -195,14 +195,16 @@ button:hover{
         4px 4px 5px rgba(0,0,0,0.3);
 }
     
-/* PRINT */
 @media print{
     body *{visibility:hidden;}
     #printArea, #printArea *{visibility:visible;}
+
     #printArea{
         position:absolute;
         top:0;
         left:0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 }
 </style>
