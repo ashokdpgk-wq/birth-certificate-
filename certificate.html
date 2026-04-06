@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certificate</title>
+
+<style>
+@page{ size:A4; margin:0; }
+
+body{ margin:0; background:#ddd; }
+
+.container{
+  width:190mm;
+  height:270mm;
+  margin:auto;
+  background:#fff;
+  margin-top:20px;
+  padding:10mm;
+  box-sizing:border-box;
+  border:4px double #000;
+}
+
+table{
+  width:100%;
+  height:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-family:Arial;
+}
+
+td{
+  vertical-align:middle;
+  text-align:center;
+  font-size:13px;
+  padding:5px;
+}
+
+.left{text-align:left;padding-left:10px;}
+.bold{font-weight:bold;}
+.big{font-size:18px;font-weight:bold;}
+
+.logo{width:55px;height:55px;}
+
+.qr img{width:90px;}
+
+@media print{
+  body{background:#fff;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<table>
+
+<tr>
+<td colspan="7" class="bold">
+পশ্চিমবঙ্গ সরকার<br>
+GOVERNMENT OF WEST BENGAL<br><br>
+SUB DIVISIONAL HOSPITAL MATHABHANGA<br><br>
+<span class="big">জম্ম শংসাপত্র / Birth Certificate</span>
+</td>
+</tr>
+
+<tr>
+<td colspan="3" class="left" id="nameField">নাম / NAME :</td>
+<td></td>
+<td colspan="3" class="left" id="sexField">লিঙ্গ / SEX :</td>
+</tr>
+
+<tr>
+<td colspan="3" class="left" id="dobField">জন্মতারিখ / DATE OF BIRTH :</td>
+<td></td>
+<td colspan="3" class="left" id="placeField">জন্মস্থান / PLACE OF BIRTH :</td>
+</tr>
+
+<tr>
+<td colspan="3" class="left" id="motherField">মাতার নাম / MOTHER :</td>
+<td></td>
+<td colspan="3" class="left" id="fatherField">পিতার নাম / FATHER :</td>
+</tr>
+
+<tr>
+<td colspan="3" class="left" id="address1">শিশুর জম্মের সময় পিতা - মাতার ঠিকানা / ADDRESS OF PARENTS AT THE TIME OF BIRTH OF CHILD :</td>
+<td></td>
+<td colspan="3" class="left" id="address2">পিতা - মাতার স্থায়ী / PERMANENT ADDRESS OF PARENTS :</td>
+</tr>
+
+<tr>
+<td colspan="3" class="left" id="regNo">নিবন্ধীকরণ নং / REGISTRATION NUMBER :</td>
+<td></td>
+<td colspan="3" class="left" id="regDate">নিবন্ধীকরণ তারিখ REGISTRATION DATE :</td>
+</tr>
+
+<tr>
+<td colspan="7" class="left" id="remark">REMARK :</td>
+</tr>
+
+<tr>
+<td colspan="7" class="left" id="authority">প্রদানকারী কর্তৃপক্ষ / ISSUING AUTHORITY :</td>
+</tr>
+
+<tr>
+<td colspan="3" class="qr">
+<img id="qrImg">
+</td>
+<td colspan="4"></td>
+</tr>
+
+<tr>
+<td colspan="7" class="center" style="font-size:10px;">
+"THIS IS A COMPUTER GENERATED CERTIFICATE"
+</td>
+</tr>
+
+</table>
+
+</div>
+
+<script>
+
+// 🔍 GET DATA FROM QR
+let p = new URLSearchParams(window.location.search);
+let data = p.get("data");
+
+if(data){
+
+let d = JSON.parse(atob(data));
+
+// AUTO FILL
+set("nameField","নাম / NAME : "+d.name);
+set("sexField","লিঙ্গ / SEX : "+d.sex);
+
+set("dobField","জন্মতারিখ / DATE OF BIRTH : <br>"+d.dob);
+set("placeField","জন্মস্থান / PLACE OF BIRTH : <br>"+d.place);
+
+set("motherField","MOTHER : <br>"+d.mother);
+set("fatherField","FATHER : <br>"+d.father);
+
+set("address1","ADDRESS :<br>"+d.a1);
+set("address2","PERMANENT ADDRESS:<br>"+d.a2);
+
+set("regNo","REG NO :<br>"+d.regno);
+set("regDate","REG DATE :<br>"+d.regdate);
+
+}
+
+// helper
+function set(id,val){
+document.getElementById(id).innerHTML = val;
+}
+
+</script>
+
+</body>
+</html>
