@@ -1,0 +1,835 @@
+ 
+
+
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/@codingnepal -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar with Dropdown Menu | CodingNepal</title>
+	<link rel="icon" type="image/png" sizes="16x16" href="https://socialsecurity.wb.gov.in/images/favicon.ico">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://socialsecurity.wb.gov.in/images/favicon.ico">
+    <link rel="stylesheet" href="/style.css" />
+	<!-- Linking fontawesome for Icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Linking Google Fonts for Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+	<script src="https://kit.fontawesome.com/f30fac2c61.js" crossorigin="anonymous"></script>
+	
+	<style>
+	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-image:url("m3.jpeg");
+  background-size:100%;
+}
+
+ .full-p{width:110%;}
+  .container-h{  
+	  margin-left:50px;}	 
+  .h-title{
+      margin-left:190px;}	
+  .header {
+      display: flex;
+	  padding:10px;
+      justify-content: space-between;
+      background-color: rgb(1, 1, 20);
+      color: white;
+      position: fixed;
+      width: 95%;
+      top: 0%;}	
+  .header ul {
+      display: flex;
+      align-items: center;
+      margin-right: 11px;}
+  .u-l .l-i {
+      list-style: none;}
+  .u-l .l-i a {
+      text-decoration: none;
+      margin-inline: 20px;
+      font-size: 28px;
+      color: white;}
+  .u-l .l-i a:hover,
+  .u-l .l-i a.active {
+	  color: lightgreen;
+      font-weight: 600;}
+</style>
+	  
+<!---Google Search Bar----->
+  <style>
+
+    .search-box {
+      width: 700px;
+      max-width: 90%;
+      display: flex;
+      border: 1px solid #dcdcdc;
+      border-radius: 15px;
+      padding: 5px 10px;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 16px;
+	  border-radius: 10px;
+      padding: 10px;
+    }
+
+    .search-box button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 16px;
+      color: #4285f4;
+    }
+
+    .search-box button:hover {
+      color: #0b66c3;
+    }
+  </style>
+
+<!---dropdown---->
+<style>	  
+             .u-d .l-d{
+                   display:inline-block;
+				   }
+
+             .dropdown { display:none; }
+                          
+
+           .u-l .l-i:hover .dropdown  {
+                      display:block;
+                      position:absolute;
+					  width:6cm;
+					  padding:8px;
+					  }
+          .u-l .l-i .dropdown:hover .u-d  {
+                      display:block;
+					  width:4.7cm;
+					  background-color:black;
+                      Margin-left:-0.29cm;
+                      Margin-top:0.10cm;
+					  }					  
+</style>
+
+<!----------------->
+<style>
+.icon {
+      display: none;
+      font-size: 30px;
+      align-items: center;
+      margin-right: 12px;
+      cursor: pointer;}
+.main {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      flex-wrap: wrap;}	
+.cards {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      flex-wrap: wrap;
+      margin-top: 12px;}
+.cards .crd img {
+      width: 300px;
+      height: 340px;
+      margin-inline: 20px;}
+.cards .crd img:hover {
+      transition: 0.6s ease;
+      height: 360px;
+      cursor: pointer;
+      color: gray;}
+.cards .crd h3 {
+      margin-top: 0px;}
+.cards .crd .rate {
+      margin-top: -10px;
+      color: rgb(255, 166, 1);}
+.cards .crd h3 {
+      margin-top: 0px;}
+.cards .crd h3 {
+      margin-top: 5px;}
+ </style>  
+	  
+	  
+	 <!---saidbar------> 
+ <style>
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 270px;
+  height: 100vh;
+  background: #151A2D;
+  transition: all 0.4s ease;
+}
+
+.sidebar.collapsed {
+  width: 85px;
+}
+
+.sidebar .sidebar-header {
+  display: flex;
+  position: relative;
+  padding: 25px 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-header .header-logo img {
+  width: 46px;
+  height: 46px;
+  display: block;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.sidebar-header .sidebar-toggler,
+.sidebar-menu-button {
+  position: absolute;
+  right: 20px;
+  height: 35px;
+  width: 35px;
+  color: #151A2D;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  background: #EEF2FF;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-header .sidebar-toggler {
+  transform: translate(-4px, 65px);
+}
+
+.sidebar-header .sidebar-toggler span,
+.sidebar-menu-button span {
+  font-size: 1.75rem;
+  transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-header .sidebar-toggler span {
+  transform: rotate(180deg);
+}
+
+.sidebar-header .sidebar-toggler:hover {
+  background: #d9e1fd;
+}
+
+.sidebar-nav .nav-list {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  padding: 0 15px;
+  flex-direction: column;
+  transform: translateY(15px);
+  transition: 0.4s ease;
+}
+
+.sidebar .sidebar-nav .primary-nav {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-bottom: 20px;
+  height: calc(100vh - 227px);
+  scrollbar-color: transparent transparent;
+}
+
+.sidebar .sidebar-nav .primary-nav:hover {
+  scrollbar-color: #EEF2FF transparent;
+}
+
+.sidebar.collapsed .sidebar-nav .primary-nav {
+  overflow: unset;
+  transform: translateY(65px);
+}
+
+.sidebar-nav .nav-item .nav-link {
+  color: #fff;
+  display: flex;
+  gap: 12px;
+  white-space: nowrap;
+  border-radius: 8px;
+  padding: 11px 15px;
+  align-items: center;
+  text-decoration: none;
+  border: 1px solid #151A2D;
+  transition: 0.4s ease;
+}
+
+.sidebar-nav .nav-item:is(:hover, .open)>.nav-link:not(.dropdown-title) {
+  color: #151A2D;
+  background: #EEF2FF;
+}
+
+.sidebar .nav-link .nav-label {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .nav-link :where(.nav-label, .dropdown-icon) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar.collapsed .nav-link .dropdown-icon {
+  transition: opacity 0.3s 0s ease;
+}
+
+.sidebar-nav .secondary-nav {
+  position: absolute;
+  bottom: 35px;
+  width: 100%;
+  background: #151A2D;
+}
+
+.sidebar-nav .nav-item {
+  position: relative;
+}
+
+/* Dropdown Stylings */
+.sidebar-nav .dropdown-container .dropdown-icon {
+  margin: 0 -4px 0 auto;
+  transition: transform 0.4s ease, opacity 0.3s 0.2s ease;
+}
+
+.sidebar-nav .dropdown-container.open .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.sidebar-nav .dropdown-menu {
+  height: 0;
+  overflow-y: hidden;
+  list-style: none;
+  padding-left: 15px;
+  transition: height 0.4s ease;
+}
+
+.sidebar.collapsed .dropdown-menu {
+  position: absolute;
+  top: -10px;
+  left: 100%;
+  opacity: 0;
+  height: auto !important;
+  padding-right: 10px;
+  overflow-y: unset;
+  pointer-events: none;
+  border-radius: 0 10px 10px 0;
+  background: #151A2D;
+  transition: 0s;
+}
+
+.sidebar.collapsed .dropdown-menu:has(.dropdown-link) {
+  padding: 7px 10px 7px 24px;
+}
+
+.sidebar.sidebar.collapsed .nav-item:hover>.dropdown-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(12px);
+  transition: all 0.4s ease;
+}
+
+.sidebar.sidebar.collapsed .nav-item:hover>.dropdown-menu:has(.dropdown-link) {
+  transform: translateY(10px);
+}
+
+.dropdown-menu .nav-item .nav-link {
+  color: #F1F4FF;
+  padding: 9px 15px;
+}
+
+.sidebar.collapsed .dropdown-menu .nav-link {
+  padding: 7px 15px;
+}
+
+.dropdown-menu .nav-item .nav-link.dropdown-title {
+  display: none;
+  color: #fff;
+  padding: 9px 15px;
+}
+
+.dropdown-menu:has(.dropdown-link) .nav-item .dropdown-title {
+  font-weight: 500;
+  padding: 7px 15px;
+}
+
+.sidebar.collapsed .dropdown-menu .nav-item .dropdown-title {
+  display: block;
+}
+
+.sidebar-menu-button {
+  display: none;
+}
+
+/* Responsive media query code for small screens */
+@media (max-width: 768px) {
+  .sidebar-menu-button {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    height: 40px;
+    width: 42px;
+    display: flex;
+    color: #F1F4FF;
+    background: #151A2D;
+  }
+
+  .sidebar.collapsed {
+    width: 270px;
+    left: -270px;
+  }
+
+  .sidebar.collapsed .sidebar-header .sidebar-toggler {
+    transform: none;
+  }
+
+  .sidebar.collapsed .sidebar-nav .primary-nav {
+    transform: translateY(15px);
+  }
+}	  
+</style>
+
+
+ <!---Project--->
+ <style>
+  .project{
+        display: flex;
+        width:80%;
+		margin-left:210px;
+		margin-top:120px;
+        display:flex;
+        flex-wrap:wrap;
+        text-align:center;
+		position: fixed;
+        }
+  .project-item{
+        width:24%;
+        margin:1%;
+        padding:20px;
+        border-radius:5px;
+        text-align:center;
+        box-shadow: 0 2px 4px rgba(4,4,5,7);
+        }
+		
+  .project .project-item:hover {
+    transition: 0.6s ease;
+    cursor: pointer;
+    background-color: skyblue;
+}
+
+    p { text-align:center;
+        font-size: 150%;}
+  img { width:80%;}
+    a { text-decoration:none;
+        color:yellow;
+        border-radius: 50%;}
+     i{ font-size:370%;
+        color: #74C0FC;}
+</style> 
+  </head>
+  <body>
+  
+
+
+ <div class="full-p">
+    <div class="container-h" id="container">
+        <!-- navbar -->
+        <nav class="header">
+            <div class="h-title">
+                <h1>Shoppy</h1>
+            </div>
+            <ul class="u-l">
+                <li class="l-i"><a href=""    id="active" class="active">
+				  Home</a>
+				</li>
+				
+                <li class="l-i"><a href=""    id="shops">
+				   Service</a>
+				  <div class="dropdown">
+				    <ul class="u-d" >
+				      <li class="l-d"><!---Udid Card/Handicate------>
+					    <a hr*f=""
+					    id="" style="font-size:20px;" target="a-1">Udid Card</a>
+					  </li>
+				      <li class="l-d"><!---E-shrom Card------>
+					    <a hr*f="https://eshram.gov.in/indexmain" 
+						id="" style="font-size:20px;" target="a-2">E-shrom Card</a>
+					  </li>
+					  <li class="l-d"><!---Abha Card------>
+					    <a hr*f="https://abha.abdm.gov.in/abha/v3/" 
+						id="" style="font-size:20px;" target="a-3">Abha Caed</a>
+					  </li>
+					  <li class="l-d"><!---Abha Card------>
+					    <a hr*f="https://www.remove.bg/" 
+						id="" style="font-size:20px;" target="a-3">Remove bg</a>
+					  </li>
+				    </ul>
+				  </div>
+				</li>
+				
+                <li class="l-i">
+			       <a hr*f="https://web.whatsapp.com/" id="reviews" target="a-4">
+				    WhateApp</a>
+				</li>
+                <li class="l-i"><a hr*f=""    id="blogs">
+				    Blog</a>
+				</li>
+				
+                <li class="l-i"><a hr*f="" id="contacts">
+				    Contact</a>
+				  <div class="dropdown">
+				    <ul class="u-d" >
+				      <li class="l-d"><!---Email------>
+					    <a hr*f="https://workspace.google.com/intl/en-US/gmail/"
+					    id="" style="font-size:20px;" target="a-1">your Email</a>
+					  </li>
+				      <li class="l-d"><!---Phone Number------>
+					    <a hr*f="" 
+						id="" style="font-size:20px;" >8016575548</a>
+					  </li>
+				    </ul>
+				  </div>
+				</li>
+            </ul>
+			
+            <div class="icon">
+                <i id="bar" class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+		
+        <div class="main">
+            <div class="mainText">
+                <h2>Fashion Hub</h2>
+                <h1>Fashion For Always</h1>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis, maxime reprehenderit.</p>
+                <button>Explore</button>
+            </div>
+		    <form class="search-box" action="https://www.google.com/search" method="GET" target="_blank">
+                <input type="text" name="q" placeholder="Search Google...">
+                <button type="submit"><i class="fa-duotone fa-solid fa-magnifying-glass"></i></button>
+            </form><br><br>
+
+            <div class="project"> <!-------------Project------------------------------>
+	    
+              <div class="project-item"><!---Ration Card--->
+                  <img style="width:60%;"
+				  src="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Ration\cardFarmate\logo2.png">
+                <b><p><a target="b-1" hr*f=" F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Ration\Ration-Card_Body\ration.html " >Ration Card</a></p></b>
+              </div>
+	        
+              <div class="project-item"><!---Aadhaar_Card---->
+                  <img style="width:70%;"
+				  src="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Aadhaar Card\Chatbot-Logo_New_jul_22.gif">
+                <b><p><a target="b-2" hr*f=" F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Aadhaar Card\Aadhaar_Card.html " >Aadhaar Card</a></p></b>
+              </div>
+	        
+              <div class="project-item"><!----------Voter_Card---------->
+                <img src="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Voter_Card\vot.jpeg">
+                <b><p><a target="b-3" hr*f=" F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Voter_Card\Voter_Card.html ">Voter Card</a></p></b>
+              </div>
+	        
+              <div class="project-item"><!--------Pan_Card---------->
+               <img src="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Pan_Card\pan.png">
+                <b><p><a target="b-4" hr*f=" F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Pan_Card\Pan_Card.html ">
+				 Pan Card</a></p></b>
+              </div>
+	        
+              <div class="project-item"><!----Job_Card------>
+                <img src=" F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Job_Card\hqdefault(3).jpg ">
+                <b><p><a target="b-5" hr*f=" F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Job_Card\Job_Card.html ">
+				 Job Card</a></p></b>
+              </div>
+	        
+              <div class="project-item"><!--------Cast_Certificate---------->
+				<video src="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Cast_Certificate\ca1.mp4" 
+				  autoplay muted loop playsinline width="150" ></video>
+                <b><p><a target="b-6" hr*f=" F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Cast_Certificate\Cast_Certificate.html ">
+				  Cast Certificate</a></p></b>
+              </div>
+            </div> <!-------------Project-end----------------------------->
+	 
+            <img src="D:\Html File\Win--Cash\WinCash\Master\Master-Body\c4.webp.jpeg" alt="" style="width:550px; margin-left:85px;">
+        </div>
+		
+		
+        <!-- card -->
+        <div class="shop" id="shop">
+            <div class="head">
+                <h2>Trending <span>Cloth's</span></h2>
+            </div>
+            <div class="cards">
+                <div class="crd">
+                    <img src="m1.jpg" alt="">
+                    <h3>top</h3>
+                    <div class="rate">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h3>$221 : Only</h3>
+                </div>
+                <div class="crd">
+                    <img src="m1.jpg" alt="">
+                    <h3>top</h3>
+                    <div class="rate">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h3>$221 : Only</h3>
+                </div>
+                <div class="crd">
+                    <img src="m1.jpg" alt="">
+                    <h3>top</h3>
+                    <div class="rate">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h3>$221 : Only</h3>
+                </div>
+            </div>
+        </div>		
+	</div>	
+  
+  
+   
+    <!-- Mobile Sidebar Menu Button -->
+    <button class="sidebar-menu-button">
+      <span class="material-symbols-rounded">menu</span>
+    </button>
+
+    <aside class="sidebar">
+      <!-- Sidebar Header -->
+      <header class="sidebar-header">
+        <a href="#" class="header-logo">
+          <img src="logo.jpeg" alt="CodingNepal" />
+        </a>
+        <button class="sidebar-toggler">
+          <span class="material-symbols-rounded"> chevron_left </span>
+        </button>
+      </header>
+
+      <nav class="sidebar-nav">
+        <!-- Primary Top Nav -->
+        <ul class="nav-list primary-nav">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="material-symbols-rounded">dashboard</span>
+              <span class="nav-label">Dashboard</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Dashboard</a></li>
+            </ul>
+          </li>
+
+          <!-- Dropdown-1 -->
+            <li class="nav-item dropdown-container">
+              <a href="#" class="nav-link dropdown-toggle">
+                <span class="material-symbols-rounded">calendar_today</span>
+                <span class="nav-label">Services-1</span>
+                <span class="dropdown-icon material-symbols-rounded"> keyboard_arrow_down </span>
+              </a>
+		    
+              <!-- Dropdown Menu -->
+              <ul class="dropdown-menu"><!----Service-1 project---->
+                <li class="nav-item"><a class="nav-link dropdown-title">Services-1</a></li>
+                <li class="nav-item"><!----Gram Panchait Certificate---->
+		 	     <a href="https://wbpms.in/citizen/"
+		 	 	class="nav-link dropdown-link" target="c-1">Gram Panchait Certificate</a>
+		 	   </li>
+                <li class="nav-item"><!---e-district 2.0---->
+		 	     <a href="https://edistrict.wb.gov.in/portal/home" 
+		 	     class="nav-link dropdown-link" target="c-2">e-district 2.0</a>
+		 	   </li>
+                <li class="nav-item"><!----Laxmi_Bhander----->
+				  <a href="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Laxmi_Bhander\index.html" 
+				  class="nav-link dropdown-link" target="c-3">Laxmi_Bhander</a>
+				</li>
+              </ul>
+            </li>
+		  
+		  <!-- Dropdown-2 -->
+            <li class="nav-item dropdown-container">
+              <a href="#" class="nav-link dropdown-toggle">
+                <span class="material-symbols-rounded">calendar_today</span>
+                <span class="nav-label">Services-2</span>
+                <span class="dropdown-icon material-symbols-rounded"> keyboard_arrow_down </span>
+              </a>
+		    
+              <!-- Dropdown Menu -->
+              <ul class="dropdown-menu"><!------Service-2 Project------>
+                <li class="nav-item"><a class="nav-link dropdown-title">Services-2</a></li>
+                <li class="nav-item"><!--------------Birth_Certificate-1------------------>
+		 	     <a href=" birth_1.html "
+		 	 	 class="nav-link dropdown-link" target="D-1">Birth Certificate-1</a>
+		 	   </li>
+               <li class="nav-item"><!--------------Birth Certificate-2--------------->
+		 	     <a href="birth_2.html" 
+		 	     class="nav-link dropdown-link" target="target="D-1">Birth Certificate-2</a>
+		 	   </li>
+               <li class="nav-item"><!--------------Aadhar_Card--------------->
+			   <a href="Aadhar_21.html" 
+			     class="nav-link dropdown-link" target="D-2">Aadhar_Card</a>
+			   </li>
+			   <li class="nav-item"><!--------------MP_Certificate_B--------------->
+			   <a href="mp_Certificate_B.html"
+			     class="nav-link dropdown-link">MP_Certificate_B</a>
+			   </li>
+			   <li class="nav-item"><!--------------MP_Certificate_G--------------->
+			   <a href="mp_Certificate_B.html"
+			     class="nav-link dropdown-link">MP_Certificate_G</a>
+			   </li>
+			   <li class="nav-item"><!--------------State_Bank_1--------------->
+			   <a href="State_Bank_1.html"
+			     class="nav-link dropdown-link">State_Bank_1</a>
+			   </li>
+              </ul>
+            </li>
+			
+		  <!-- Dropdown-3 -->
+            <li class="nav-item dropdown-container">
+              <a href="#" class="nav-link dropdown-toggle">
+                <span class="material-symbols-rounded">calendar_today</span>
+                <span class="nav-label">Services-3</span>
+                <span class="dropdown-icon material-symbols-rounded"> keyboard_arrow_down </span>
+              </a>
+		    
+              <!-- Dropdown Menu -->
+              <ul class="dropdown-menu"><!------Service-3 Project------>
+                <li class="nav-item"><a class="nav-link dropdown-title">Services-3</a></li>
+                <li class="nav-item"><!--------------Parijayi Shromik------------------->
+		 	     <a href=" https://karmasathips.wb.gov.in/ "
+		 	 	 class="nav-link dropdown-link" target="D-1">Parijayi Shromik</a>
+		 	   </li>
+               <li class="nav-item"><!--------------OLD PENTION OF HARIYANA--------------->
+		 	     <a href="https://pension.socialjusticehry.gov.in/ben_inf" 
+		 	     class="nav-link dropdown-link" target="target="D-1">Old Pention of Hariyana</a>
+		 	   </li>
+               <li class="nav-item"><!--------------Joybangla Pention Stutas--------------->
+			   <a href="https://jaibangla.wb.gov.in/" 
+			     class="nav-link dropdown-link" target="D-2">Joybangla Pention Stutas</a>
+			   </li>
+			   <li class="nav-item"><!--------------e-Pension Portal--------------->
+			   <a href="https://epension.wb.gov.in/e_PensionHome/index" 
+			     class="nav-link dropdown-link" target="D-3">e-Pension Portal</a>
+			   </li>
+			   <li class="nav-item"><!--------------Font Awesome--------------->
+			     <a href="https://fontawesome.com/search?o=r" 
+			      class="nav-link dropdown-link" target="D-4">Font Awesome</a>
+			   </li>
+			   <li class="nav-item"><a href="#" class="nav-link dropdown-link">Mobile Apps</a></li>
+              </ul>
+            </li>
+		  
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="material-symbols-rounded">notifications</span>
+              <span class="nav-label">Notifications</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Notifications</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="material-symbols-rounded">local_library</span>
+              <span class="nav-label">Resources</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Resources</a></li>
+            </ul>
+          </li>
+
+          <!-- Dropdown -->
+          <li class="nav-item dropdown-container">
+            <a href="#" class="nav-link dropdown-toggle">
+              <span class="material-symbols-rounded">star</span>
+              <span class="nav-label">Bookmarks</span>
+              <span class="dropdown-icon material-symbols-rounded">keyboard_arrow_down</span>
+            </a>
+
+            <!-- Dropdown Menu -->
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Bookmarks</a></li>
+              <li class="nav-item"><!-------------Customar_Management---------------->
+			     <a href="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Customar_ManageMant\Body_of_Search-bar\Body_of_Search-bar.html"
+			     class="nav-link dropdown-link">Customar_Management</a>
+			  </li>
+              <li class="nav-item"><!-------------Airtel_Payment_Bank---------------->
+			     <a href="F:\html\Web-DebloptmeNt\HTML FILE\Win--Cash\Win--Cash\WinCash\Airtel_Payment_Bank\Body of Airtel_Payment_Bank\Body_of_Search-bar.html" 
+				 class="nav-link dropdown-link">Airtel_Payment_Bank</a>
+			  </li>
+              <li class="nav-item"><!----Create GIF image---->
+			     <a href="https://ezgif.com/maker"
+				 class="nav-link dropdown-link">Create GIF image</a>
+			  </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="material-symbols-rounded">extension</span>
+              <span class="nav-label">Extensions</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Extensions</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="material-symbols-rounded">settings</span>
+              <span class="nav-label">Settings</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Settings</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Secondary Bottom Nav -->
+        <ul class="nav-list secondary-nav">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="material-symbols-rounded">help</span>
+              <span class="nav-label">Support</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Support</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <span class="material-symbols-rounded">logout</span>
+              <span class="nav-label">Sign Out</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link dropdown-title">Sign Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+ </div>
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
