@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Smart ID Card System</title>
+
+<style>
+body{
+    font-family:'Segoe UI',Arial;
+    background:linear-gradient(135deg,#e0e0e0,#f8f8f8);
+    text-align:center;
+}
+
+/* FORM */
+.form{
+    background:#fff;
+    padding:15px;
+    margin:15px auto;
+    width:95%;
+    max-width:900px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+input{
+    margin:6px;
+    padding:8px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-weight:600;
+}
+
+button{
+    padding:8px 15px;
+    background:#1976d2;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+
+/* CARD AREA */
+#printArea{
+    display:flex;
+    gap:40px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+/* CARD */
+.card{
+    width:340px;
+    height:215px;
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+    background:#fff;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.4),
+        inset 0 0 10px rgba(255,255,255,0.3);
+}
+
+/* BACKGROUND */
+.front{background:url('aadhaar_1.png') no-repeat center/cover;}
+.back{background:url('aadhaar_2.jpg') no-repeat center/cover;}
+
+/* GLASS OVERLAY */
+//.front::before,
+.back::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(3px);
+}
+
+.front *,.back *{position:relative;}
+
+/* PHOTO */
+.photo{
+    position:absolute;
+    left:14px;
+    top:52px;
+    width:75px;
+    height:100px;
+    object-fit:cover;
+    border-radius:6px;
+    border:1px solid #000;
+    box-shadow:0 5px 10px rgba(0,0,0,0.3);
+}
+
+.photo2{
+    position:absolute;
+    top:50px;
+    right:10px;
+    width:37px;
+    height:49px;
+    border:1px solid #000;
+    object-fit:cover;
+    filter:grayscale(100%);
+}
+
+/* INFO */
+.info{
+    position:absolute;
+    left:100px;
+    top:55px;
+    font-size:11px;
+    line-height:1.6;
+    text-align:left;
+}
+
+/* NUMBER */
+.number{
+    position:absolute;
+    bottom:30px;
+    width:100%;
+    text-align:center;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+/* ADDRESS */
+.address{
+    position:absolute;
+    left:25px;
+    top:70px;
+    width:180px;
+    font-size:15px;
+    text-align:left;
+}
+
+/* QR */
+.qr{
+    position:absolute;
+    right:18px;
+    top:47%;
+    transform:translateY(-50%);
+    width:110px;
+    height:110px;
+    background:#fff;
+    border-radius:6px;
+    box-shadow:0 5px 12px rgba(0,0,0,0.4);
+}
+
+/* 🔥 REAL FLOATING (NO HEAVY SHADOW BELOW) */
+.header span,
+.info,
+.info b,
+.number,
+.address{
+
+    color:#000;
+    font-weight:900;
+
+    transform: translateY(-2px);
+
+    text-shadow:
+        /* 🔹 top light */
+        -1px -1px 0 #ddd,
+
+        /* 🔹 edge depth (balanced) */
+        1px 1px 0 #999,
+        2px 2px 0 #777,
+        3px 3px 0 #555,
+
+        /* 🔹 soft balanced shadow (not only bottom) */
+        2px 3px 4px rgba(0,0,0,0.25);
+
+}
+    
+#name{
+    transform: translateY(-3px);
+
+    text-shadow:
+        -1px -1px 0 #eee,
+        1px 1px 0 #888,
+        2px 2px 0 #666,
+        3px 3px 4px rgba(0,0,0,0.3);
+}
+    
+.number{
+    transform: translateY(-3px);
+
+    text-shadow:
+        -1px -1px 0 #eee,
+        1px 1px 0 #888,
+        2px 2px 0 #666,
+        4px 4px 5px rgba(0,0,0,0.3);
+}
+    
+/* PRINT */
+@media print{
+    body *{visibility:hidden;}
+    #printArea, #printArea *{visibility:visible;}
+    #printArea{
+        position:absolute;
+        top:0;
+        left:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="form">
+<input placeholder="Name" oninput="setVal('name',this.value)">
+<input placeholder="Gender" oninput="setVal('gender',this.value)">
+<input placeholder="DOB" oninput="setVal('dob',this.value)">
+<input placeholder="UID" oninput="setNumber(this.value)">
+<input placeholder="Father" oninput="setVal('father',this.value)">
+<input placeholder="Address" oninput="setVal('address',this.value)">
+<br>
+<input type="file" onchange="loadPhoto(event)">
+<br>
+<button onclick="printCard()">Print</button>
+</div>
+
+<div id="printArea">
+
+<!-- FRONT -->
+<div class="card front">
+
+<img id="photo" class="photo">
+<img id="photo2" class="photo2">
+
+<div class="info">
+<b id="name">ANKRIT SARKAR</b><br>
+Father: <b id="father">BIKASH SARKAR</b><br>
+জন্মতারিখ/DOB: <b id="dob">01/01/1990</b><br>
+<span id="gender">MALE</span>
+</div>
+
+<div class="number" id="number">1234 5678 9101</div>
+
+</div>
+
+<!-- BACK -->
+<div class="card back">
+
+ <div class="address">
+     Address : <br><b id="address">Sarkar para, Kalirhat, Dhupguri, Jalpaiguri, West Bengal - 735210</b>
+ </div>
+
+<canvas id="qr" class="qr"></canvas>
+
+<div class="number" id="number2">1234 5678 9101</div>
+
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.0/qrcode.min.js"></script>
+
+<script>
+function setVal(id,val){
+    document.getElementById(id).innerText = val;
+    generateQR();
+}
+
+function setNumber(val){
+    val = val.replace(/\D/g,'').substring(0,12);
+    val = val.replace(/(\d{4})(?=\d)/g,'$1 ');
+    document.getElementById("number").innerText = val;
+    document.getElementById("number2").innerText = val;
+    generateQR();
+}
+
+function getXML(){
+    let uid = document.getElementById("number").innerText.replace(/\s/g,'');
+    let name = document.getElementById("name").innerText;
+    let gender = document.getElementById("gender").innerText;
+    let dob = document.getElementById("dob").innerText;
+    let father = document.getElementById("father").innerText;
+    let address = document.getElementById("address").innerText;
+
+    return `<data uid="${uid}" name="${name}" gender="${gender}" dob="${dob}" father="${father}" address="${address}" />`;
+}
+
+function generateQR(){
+    let canvas = document.getElementById("qr");
+    QRCode.toCanvas(canvas, getXML(), {width:110});
+}
+
+function loadPhoto(e){
+    let file = URL.createObjectURL(e.target.files[0]);
+    photo.src = file;
+    photo2.src = file;
+}
+
+window.onload = generateQR;
+
+function printCard(){
+    window.print();
+}
+</script>
+
+</body>
+</html>
