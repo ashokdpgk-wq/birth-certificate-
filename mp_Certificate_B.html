@@ -149,15 +149,17 @@ height:100%;
 <input placeholder="Right No" oninput="set('rightNo',this.value)">
 <input value="ASHOK SARKAR" placeholder="Name" oninput="updateName(this.value)">
 <input value="BIBHUTI SARKAR" placeholder="Father Name" oninput="updateFather(this.value)">
-<input placeholder="Place" oninput="updatePlace(this.value)">
+<input placeholder="Name of the School" oninput="updatePlace(this.value)">
 <input value="SIXTEENTH" placeholder="DOB" oninput="updateDOB(this.value)">
-<input value="Two Thousand ONE" placeholder="Year" oninput="updateYear(this.value)">
+<input value="Two Thousand" placeholder="Year Text" oninput="set('yearText',this.value)">
+<input value="ONE" placeholder="Year" oninput="updateYear(this.value)">
 <input value="March 2024" placeholder="Month" oninput="updateMonth(this.value)">
 <input value="XXXXX"placeholder="Held Month" oninput="updateHeld(this.value)">
 <input placeholder="Grade" oninput="updateGrade(this.value)">
-<input value="day of NOVEMBER"placeholder="Right Text" oninput="set('rtext',this.value)">
+<input value=" NOVEMBER"placeholder="Right Text" oninput="updatertext(this.value)">
 <input placeholder="Date" oninput="set('date',this.value)">
-
+<input placeholder="Place (Kalirhat – 735210)" oninput="updatePlaceBottom(this.value)">
+  
 <br>
 
 📷 Photo: <input type="file" onchange="loadPhoto(event)">
@@ -204,15 +206,18 @@ MADHYMIK PARIKSHA (SECONDARY EXAMINATION),2024
 <div id="line2">Son / XXXXXXX / XXX of <b style="margin-left:20px;">BIBHUTI SARKAR</b></div><br>
 <div id="line3"style="font-size:16px;">appearing from /<b style="font-size:14px;"> XX KALIRHAT DEWAN CHANDRA HIGH SCHOOL</b></div><br><br><br>
 <div id="line4">whose date of Birth is &nbsp;&nbsp;&nbsp;&nbsp;<B style="font-size:14px;">SIXTEENTH</B></div><br>
-<div id="line5">Two Thousand <b style="font-size:14px;">ONE</b></div><br>
+<div id="line5">
+<span id="yearText">Two Thousand</span> 
+<b id="yearValue" style="font-size:14px;">ONE</b>
+</div>
 <div id="line6" style="margin-left:110px;">March 2024</div>
 <div id="line7">Held in the month of XXXXX</div>
 <div id="line8" style="float:right;margin-top:-12px;margin-right:160px;">with overall Grade B</div>
 
 </div>
 
-<div class="rightText" id="rtext">
-day of <b style="font-size:14px;">NOVEMBER</b>
+<div class="rightText" id="rtext1">
+day of &nbsp;&nbsp;<b style="font-size:14px;">NOVEMBER</b>
 </div>
 <div class="rightText" id="rtext" style="margin-right:80px;">
 <br><br>
@@ -222,12 +227,12 @@ duly passed the Madhyamik Pariksha (Secondary Examination)
 <img src="mp_2.png" class="seal">
 
 <div class="bottom">
-Kalirhat – 735210<br>
+<span id="place">Kalirhat – 735210</span><br>
 Dated <span id="date">6th June, 2024</span>
 </div>
 
 <div class="sign">
-<div>Deputy Signature</div>
+<div style="margin-right:110px;">Deputy Signature</div>
 <div>Deputy Signature</div>
 </div>
 
@@ -277,6 +282,13 @@ if(printCount >= 15) return;
 line4.innerHTML = "whose date of Birth is &nbsp;&nbsp;&nbsp; <b>" + val+"</b>";
 }
 
+function updatertext(val){
+if(printCount >= 15) return;
+document.getElementById("rtext1").innerHTML =
+"day of &nbsp;&nbsp;<b>" + val + "</b>";
+}
+  
+  
 function updateYear(val){
 if(printCount >= 15) return;
 line5.innerHTML = "Two Thousand &nbsp;&nbsp;&nbsp; <b>" + val+"</b>";
@@ -285,7 +297,7 @@ line5.innerHTML = "Two Thousand &nbsp;&nbsp;&nbsp; <b>" + val+"</b>";
 
 function updateMonth(val){
 if(printCount >= 15) return;
-line6.innerHTML ="March" + val;
+line6.innerHTML ="" + val;
 }
 
 function updateHeld(val){
@@ -296,6 +308,11 @@ line7.innerHTML = "Held in the month of <b>" + val+"</b>";
 function updateGrade(val){
 if(printCount >= 15) return;
 line8.innerHTML = "with overall Grade <b>" + val + "</b>";
+}
+  
+function updatePlaceBottom(val){
+if(printCount >= 15) return;
+document.getElementById("place").innerHTML = val || "---";
 }
 
 // PHOTO
