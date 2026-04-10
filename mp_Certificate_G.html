@@ -147,18 +147,19 @@ height:100%;
 <input value="MADHYMIK PARIKSHA (SECONDARY EXAMINATION),2024" placeholder="Comunitee" oninput="set('Line0',this.value)">
 <input placeholder="Left No" oninput="set('leftNo',this.value)">
 <input placeholder="Right No" oninput="set('rightNo',this.value)">
-<input value="ASHOK SARKAR" placeholder="Name" oninput="updateName(this.value)">
-<input value="BIBHUTI SARKAR" placeholder="Father Name" oninput="updateFather(this.value)">
+<input value="" placeholder="Name ex(ANIMESH SARKAR)" oninput="updateName(this.value)">
+<input value="" placeholder="Father ex(BIRENDRA SARKAR)" oninput="updateFather(this.value)">
 <input placeholder="Name of the School" oninput="updatePlace(this.value)">
-<input value="SIXTEENTH" placeholder="DOB" oninput="updateDOB(this.value)">
-<input value="Two Thousand" placeholder="Year Text" oninput="set('yearText',this.value)">
-<input value="ONE" placeholder="Year Value" oninput="set('yearValue',this.value)">
-<input value="March 2024" placeholder="Month" oninput="updateMonth(this.value)">
-<input value="XXXXXX"placeholder="Held Month" oninput="updateHeld(this.value)">
-<input placeholder="Grade" oninput="updateGrade(this.value)">
-<input value=" NOVEMBER"placeholder="Right Text" oninput="updatertext(this.value)">
-<input placeholder="Date" oninput="set('date',this.value)">
-<input placeholder="Place (Kalirhat – 735210)" oninput="updatePlaceBottom(this.value)">
+<input value="" placeholder="DOB-day ex(SIXTEENTH)" oninput="updateDOB(this.value)">
+  <input value="" placeholder="DOB-monts ex(NOVEMBER)" oninput="updatertext(this.value)">
+<input value="" placeholder="DOB-Year ex(Two Thousand)" oninput="set('yearText',this.value)">
+<input value="" placeholder="DOB-Year ex(ONE)" oninput="set('yearValue',this.value)">
+<input value="" placeholder="held in ex(March 2024)" oninput="updateMonth(this.value)">
+<input value=""placeholder="Held Month ex(XXXXXX)" oninput="updateHeld(this.value)">
+<input placeholder="Grade ex(B+)" oninput="updateGrade(this.value)">
+<input placeholder="Place (Kolkata – 700 016)" oninput="updatePlaceBottom(this.value)">
+<input placeholder="Dated ex(6th June, 2024)" oninput="set('date',this.value)">
+
   
 <br>
 
@@ -202,12 +203,12 @@ MADHYMIK PARIKSHA (SECONDARY EXAMINATION),2024
 <!-- 🔥 FULL DYNAMIC TEXT -->
 <div class="text">
 
-<div id="line1">Certificate that &nbsp;&nbsp;&nbsp;&nbsp; <b>ASHOK SARKAR</b></div><br>
-<div id="line2">XXX / Daughter / XXX of <b style="margin-left:20px;">BIBHUTI SARKAR</b></div><br>
+<div id="line1">Certificate that &nbsp;&nbsp;&nbsp;&nbsp; <b>ANIMESH SARKAR</b></div><br>
+<div id="line2">XXX / Daughter / XXX of <b style="margin-left:20px;">BIRENDRA SARKAR</b></div><br>
 <div id="line3"style="font-size:16px;">appearing from /<b style="font-size:14px;"> XX KALIRHAT DEWAN CHANDRA HIGH SCHOOL</b></div><br><br><br>
 <div id="line4">whose date of Birth is &nbsp;&nbsp;&nbsp;&nbsp;<B style="font-size:14px;">SIXTEENTH</B></div><br>
 <div id="line5">
-<span id="yearText">Two Thousand</span> 
+<span id="yearText">Two Thousand</span> &nbsp;&nbsp;
 <b id="yearValue" style="font-size:14px;">ONE</b>
 </div>
 <div id="line6" style="margin-left:110px;">March 2024</div>
@@ -227,7 +228,7 @@ duly passed the Madhyamik Pariksha (Secondary Examination)
 <img src="mp_2.png" class="seal">
 
 <div class="bottom">
-<span id="place">Kalirhat – 735210</span><br>
+<span id="place">Kolkata – 700 016</span><br>
 Dated <span id="date">6th June, 2024</span>
 </div>
 
@@ -269,7 +270,7 @@ line1.innerHTML = "Certificate that &nbsp;&nbsp;&nbsp;<b>" + val+"</b>";
 
 function updateFather(val){
 if(printCount >= 15) return;
-line2.innerHTML = "Son / XXXXXXX / XXX of &nbsp;&nbsp;&nbsp;<b>" + val+"</b>";
+line2.innerHTML = "XXX / Daughter / XXX of &nbsp;&nbsp;&nbsp;<b>" + val+"</b>";
 }
 
 function updatePlace(val){
