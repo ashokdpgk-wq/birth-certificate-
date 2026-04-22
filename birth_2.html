@@ -116,19 +116,20 @@ td{
 
 <body>
   <!-- FORM -->
-<div id="formBox" style="position:fixed; 
+<div style="position:fixed; 
   top:10px;
   left:10px; 
   background:#fff;
   padding:10px; 
   border:1px solid #000;
   z-index:999;
-  height:50vh;
+  height:70vh;
   overflow:auto;">
 
 <input id="name" placeholder="Name"><br><br>
 <input id="sex" placeholder="Sex"><br><br>
 <input id="dob" placeholder="DOB"><br><br>
+ <input id="dobWords" placeholder="DOB in Words"><br><br>
 <input id="place" placeholder="Birth Place"><br><br>
 
 <input id="mother" placeholder="Mother Name"><br><br>
@@ -145,6 +146,7 @@ td{
 
 <input id="remarkInput" placeholder="Remark"><br><br>
 <input id="authorityInput" placeholder="Authority"><br><br>
+<input id="updateTime" placeholder="Updated Time"><br><br>
 
 <button onclick="updateAll()">Update</button>
 <button onclick="downloadPDF()">PDF</button>
@@ -209,8 +211,8 @@ THIS IS TO CERTIFICATE THE FOLLOWING INFORMATION HAS BEEN TAKEN FROM THE ORGINAL
 <!-- Row 5 -->
 <tr>
 <td colspan="3" class="left" id="dobField">
-জন্মতারিখ / DATE OF BIRTH : <br> 01/02/2002<br>
-ONE- JANUARY- TWO THOUSAND AND TWO
+জন্মতারিখ / DATE OF BIRTH : <br> 11/02/2021<br>
+ELEVEN- JANUARY- TWO THOUSAND AND TWTY TWO
 </td>
 <td></td>
 <td colspan="3" class="left" id="placeField">
@@ -220,39 +222,39 @@ ONE- JANUARY- TWO THOUSAND AND TWO
 
 <!-- Row 6 -->
 <tr>
-<td colspan="3" class="left" id="motherField">মাতার নাম / NAME OF MOTHER : <br>ANJALI BISWAS</td>
+<td colspan="3" class="left" id="motherField">মাতার নাম / NAME OF MOTHER : <br>LALITA DAS</td>
 <td></td>
-<td colspan="3" class="left" id="fatherField">পিতার নাম / NAME OG FATHER : <br>ANIL CHANDRA BISWAS</td>
+<td colspan="3" class="left" id="fatherField">পিতার নাম / NAME OG FATHER : <br>KRISHNA DAS</td>
 </tr>
 
 <!-- Row 7 -->
 <tr>
-<td colspan="3" class="left" id="motherAadhaar">আধার সংখ্যা / MOTHER'S AADHAAR NO : <br> XXXXXXXX2356</td>
+<td colspan="3" class="left" id="motherAadhaar">আধার সংখ্যা / MOTHER'S AADHAAR NO : <br> XXXXXXXX9555</td>
 <td></td>
-<td colspan="3" class="left" id="fatherAadhaar"> আধার সংখ্যা / FATHER'S AADHAAR NO : <br> XXXXXXXX5698</td>
+<td colspan="3" class="left" id="fatherAadhaar"> আধার সংখ্যা / FATHER'S AADHAAR NO : <br> XXXXXXXX7159</td>
 </tr>
 
 <!-- Row 8 -->
 <tr>
 <td colspan="3" class="left" id="address1">
 শিশুর জম্মের সময় পিতা - মাতার ঠিকানা / ADDRESS OF PARENTS AT THE TIME OF BIRTH OF CHILD :<br>
-KALIRHAT, DHUPGURI, JALPAIGURI, WEST BENGAL, 735210
+JHAR MAGURMARI, KALIRHAT, DHUPGURI, JALPAIGURI, WEST BENGAL - 735210
 </td>
 <td></td>
 <td colspan="3" class="left" id="address2">
  পিতা - মাতার স্থায়ী / PERMANENT ADDRESS OF PARENTS :<br>
-KALIRHAT, DHUPGURI, JALPAIGURI, WEST BENGAL, 735210
+JHAR MAGURMARI, KALIRHAT, DHUPGURI, JALPAIGURI, WEST BENGAL - 735210
 </td>
 </tr>
 
 <!-- Row 9 -->
 <tr>
 <td colspan="3" class="left" id="regNo">
-নিবন্ধীকরণ নং / REGISTRATION NUMBER :<br> B-2020: 19-00123-567890
+নিবন্ধীকরণ নং / REGISTRATION NUMBER :<br> B-2021: 19-00123-567890
 </td>
 <td></td>
 <td colspan="3" class="left" id="regDate">
-নিবন্ধীকরণ তারিখ / REGISTRATION DATE : <br> 02/03/2025
+নিবন্ধীকরণ তারিখ REGISTRATION DATE : <br> 11/02/2021
 </td>
 </tr>
 
@@ -266,7 +268,7 @@ KALIRHAT, DHUPGURI, JALPAIGURI, WEST BENGAL, 735210
 <!-- Row 11 -->
 <tr>
 <td></td><td></td><td></td><td></td>
-  
+
 <td colspan="3" rowspan="2" class="overlay-box center bold">
 
 <img src="birth_4.2.png" class="overlay-logo" style="width:230px; height:110px;">
@@ -281,7 +283,7 @@ SUB DIVISIONAL HOSPITAL MATHABHANGA
 <!-- Row 12 -->
 <tr>
 <td colspan="3" class="left">
-<br><br><br><br>UPDATED ON : <br>09:03:2025 12:16:24
+<br><br><br><br>UPDATED ON : <br><span id="updateField">09:03:2025 12:16:24</span>
 </td>
 <td></td>
 </tr>
@@ -335,133 +337,83 @@ SUB DIVISIONAL HOSPITAL MATHABHANGA
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <script>
 
-// 🔐 TOKEN
-function generateToken(data){
-  return btoa(data).substring(0,25);
-}
-
-// helpers
-function set(id,val){document.getElementById(id).innerHTML=val;}
-function val(id){return document.getElementById(id).value;}
-
-// ✅ UPDATE FUNCTION
 function updateAll(){
 
-let name = val("name");
-let sex = val("sex");
-let dob = val("dob");
-let place = val("place");
+let name = nameInput("name");
+let sex = nameInput("sex");
+let dob = nameInput("dob");
+let dobWords = nameInput("dobWords");
+let place = nameInput("place");
 
-let mother = val("mother");
-let father = val("father");
+let mother = nameInput("mother");
+let father = nameInput("father");
 
-let mA = val("motherA");
-let fA = val("fatherA");
+let mA = nameInput("motherA");
+let fA = nameInput("fatherA");
 
-let a1 = val("addr1");
-let a2 = val("addr2");
+let a1 = nameInput("addr1");
+let a2 = nameInput("addr2");
 
-let regno = val("regno");
-let regdate = val("regdate");
+let regno = nameInput("regno");
+let regdate = nameInput("regdate");
 
-let remark = val("remarkInput");
-let auth = val("authorityInput");
-
-// UI UPDATE
+let remark = nameInput("remarkInput");
+let auth = nameInput("authorityInput");
+let updateTime = nameInput("updateTime");
+// Update Fields
 set("nameField", "নাম / NAME : " + name);
-set("sexField", "লিঙ্গ / SEX : " + sex);
+set("sexField", "লিঙ্গ / Sex : " + sex);
 
-set("dobField", "জন্মতারিখ / DATE OF BIRTH : <br>" + dob);
-set("placeField", "জন্মস্থান / PLACE OF BIRTH : <br>" + place);
+set("dobField", "জন্মতারিখ / DATE OF BIRTH : <br>" + dob + "<br>" + dobWords);
+set("placeField", "জন্মস্থান / BIRTH PLACE : <br>" + place);
 
-set("motherField", "মাতার নাম / NAME OF MOTHER : <br>" + mother);
-set("fatherField", "পিতার নাম / NAME OG FATHER : <br>" + father);
+set("motherField", "মাতার নাম : <br>" + mother);
+set("fatherField", "পিতার নাম : <br>" + father);
 
-set("motherAadhaar", "আধার সংখ্যা / MOTHER'S AADHAAR NO : <br>" + mA);
-set("fatherAadhaar", "আধার সংখ্যা / FATHER AADHAAR : <br>" + fA);
+set("motherAadhaar", "MOTHER'S AADHAAR NO : <br>" + mA);
+set("fatherAadhaar", "FATHER'S AADHAAR NO : <br>" + fA);
 
-set("address1", "শিশুর জম্মের সময় পিতা - মাতার ঠিকানা / ADDRESS OF PARENTS AT THE TIME OF BIRTH OF CHILD :<br>" + a1);
-set("address2", "পিতা - মাতার স্থায়ী / PERMANENT ADDRESS OF PARENTS :<br>" + a2);
+set("address1", "ADDRESS OF PARENTS:<br>" + a1);
+set("address2", "PERMANENT ADDRESS:<br>" + a2);
 
-set("regNo", "নিবন্ধীকরণ নং / REGISTRATION NUMBER :<br>" + regno);
-set("regDate", "নিবন্ধীকরণ তারিখ / REGISTRATION DATE :<br>" + regdate);
+set("regNo", "REGISTRATION NO :<br>" + regno);
+set("regDate", "REGISTRATION DATE :<br>" + regdate);
 
 set("remark", "REMARK : " + remark);
-set("authority", "প্রদানকারী কর্তৃপক্ষ / ISSUING AUTHORITY : " + auth);
+set("authority", "ISSUING AUTHORITY : " + auth);
+  
+  set("updateField", updateTime);
 
-// 🔳 DATA PACK
-let raw = [name,dob,sex,mother,father,a1,a2].join("|");
+// 🔳 QR + Barcode Sync
+let data = name + "-" + dob + "-" + regno;
 
-// 🔐 TOKEN
-let token = generateToken(raw);
-
-// ✅ 🔥 তোমার GitHub URL
-let baseURL = "https://ashokdpgk-wq.github.io/birth.GitHub.io/birth_2.html";
-
-// 🔗 FINAL LINK
-let url = baseURL + "?data=" + encodeURIComponent(raw) + "&token=" + token;
-
-// ✅ QR
 document.querySelector(".qr img").src =
-"https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(url);
-
-// ✅ BARCODE FIX
-let bdata =
-"NAME:"+name+
-";DOB:"+dob+
-";SEX:"+sex+
-";MOTHER:"+mother+
-";FATHER:"+father;
+"https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(data);
 
 document.querySelector("img[src*='barcode']").src =
-"https://barcode.tec-it.com/barcode.ashx?data=" + encodeURIComponent(bdata) + "&code=Code128";
+"https://barcode.tec-it.com/barcode.ashx?data=" + encodeURIComponent(data);
 
 }
 
-window.onload = function(){
-
-let params = new URLSearchParams(window.location.search);
-let data = params.get("data");
-
-// ✅ যদি QR scan করা হয়
-if(data){
-  document.getElementById("formBox").style.display = "none";
-}else{
-  updateAll(); // 🔥 QR generate হবে
+function set(id, val){
+document.getElementById(id).innerHTML = val;
 }
 
-// ✅ AUTO FILL
-if(data){
-
-let arr = decodeURIComponent(data).split("|");
-
-set("nameField", "নাম / NAME : " + arr[0]);
-set("dobField", "জন্মতারিখ : <br>" + arr[1]);
-set("sexField", "লিঙ্গ : " + arr[2]);
-set("motherField", "মাতার নাম : <br>" + arr[3]);
-set("fatherField", "পিতার নাম : <br>" + arr[4]);
-set("address1", "ঠিকানা :<br>" + arr[5]);
-set("address2", "স্থায়ী ঠিকানা :<br>" + arr[6]);
-
+function nameInput(id){
+return document.getElementById(id).value;
 }
 
-}
-
-// PDF
 function downloadPDF(){
 html2pdf().from(document.querySelector(".container")).save();
 }
+  
 
-// PRINT
+  
 function printPage(){
-window.print();
+  window.print();
 }
-
 </script>
 </body>
 </html>
