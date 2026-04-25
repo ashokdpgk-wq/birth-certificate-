@@ -7,22 +7,21 @@
 <style>
 body{
 margin:0;
-background:#eee;
 font-family:Arial;
 }
 
 /* A4 */
 @page{
 size:A4;
-margin:0;
+margin:5mm;
 }
 
 #certificate{
-width:210mm;
-height:297mm;
+width:200mm;          /* একটু কম */
+min-height:287mm;     /* 297 থেকে কম */
 background:#fff;
-margin:auto;
-padding:15mm 20mm;
+margin:5mm auto;      /* চারপাশে safe gap */
+padding:12mm 15mm;
 box-sizing:border-box;
 border:2px solid #000;
 position:relative;
@@ -63,7 +62,7 @@ font-size:16px;
 /* PHOTO */
 .photo{
 position:absolute;
-top:95mm;
+top:85mm;
 right:25mm;
 width:35mm;
 height:45mm;
@@ -74,7 +73,7 @@ object-fit:cover;
 /* TITLE */
 .title{
 text-align:center;
-margin-top:65mm;
+margin-top:55mm;
 font-size:22px;
 font-weight:bold;
 border-bottom:2px solid #000;
@@ -94,7 +93,7 @@ text-align:justify;
 .sign{
 position:absolute;
 right:25mm;
-bottom:25mm;
+bottom:35mm;
 }
 
 .signBox{
@@ -145,26 +144,81 @@ background:#000;   /* রং */
 border:none;       /* default border remove */
 margin:10px 0;     /* spacing */
 }
+ 
+ /* MAIN LAYOUT */
+.main{
+display:flex;
+gap:20px;
+padding:10px;
+}
+
+/* LEFT FORM */
+.left{
+width:35%;
+}
+
+/* RIGHT CERTIFICATE */
+.right{
+width:65%;
+display:flex;
+justify-content:center;
+}
+
+/* certificate scaling for screen */
+.right #certificate{
+transform:scale(0.9);
+transform-origin:top center;
+}
+
+/* MOBILE FIX */
+@media(max-width:900px){
+.main{
+flex-direction:column;
+}
+.left, .right{
+width:100%;
+}
+.right #certificate{
+transform:scale(1);
+}
+}
   
 /* PRINT */
 @media print{
-body *{visibility:hidden;}
-#certificate, #certificate *{visibility:visible;}
+
+body{
+margin:0;
+padding:0;
+-webkit-print-color-adjust:exact;
+print-color-adjust:exact;
+}
+
 #certificate{
 position:absolute;
-top:0;
-left:0;
-border:none;
+top:5mm;              /* 🔥 কাটার সমস্যা fix */
+left:5mm;
+width:205mm;
+min-height:277mm;
+border:2px solid #000;
 }
-.form{display:none;}
+
+.form{
+display:none;
+}
+
 }
 </style>
 </head>
 
 <body>
+ 
+ <div class="main">
 
-<!-- FORM -->
-<div class="form">
+  <!-- LEFT FORM -->
+  <div class="left">
+    <!-- তোমার existing form এখানে থাকবে -->
+   <!-- FORM -->
+   <div class="form">
 
 <input placeholder="Certificate No" oninput="setVal('certNo',this.value)">
 <input placeholder="Date" oninput="setVal('date',this.value)">
@@ -185,6 +239,7 @@ border:none;
 <input placeholder="Location" oninput="setVal('signLocation',this.value)">
 <input placeholder="Officer Place" oninput="setVal('officerPlace',this.value)">
 <input placeholder="Signature Date ex(18-03-2026 18:33:23)" oninput="setVal('signDate',this.value)">
+ <input placeholder="Unique Verification Number" oninput="setVal('uniqueNo',this.value)">
 
 <label>
 <input type="checkbox" onchange="toggleTick(this.checked)"> Show Tick Mark
@@ -196,8 +251,12 @@ border:none;
 <button onclick="window.print()">Print</button>
 
 </div>
+  </div>
 
-<!-- CERTIFICATE -->
+  <!-- RIGHT CERTIFICATE -->
+  <div class="right">
+    <!-- তোমার existing certificate এখানে থাকবে -->
+   <!-- CERTIFICATE -->
 <div id="certificate">
 
 <div class="header">
@@ -208,8 +267,8 @@ border:none;
 </div>
 
 <div class="topLine">
-<div><b>Certificate No. :</b> <span id="certNo"></span></div>
-<div><b>Dated :</b> <span id="date"></span></div>
+<div><b>Certificate No. : <span id="certNo">2100423064075749153</span></b></div>
+<div><b>Dated : <span id="date">18-Mar-2026</span></b></div>
 </div>
 
 <img id="photo" class="photo">
@@ -220,7 +279,7 @@ border:none;
 
 <div class="content">
 This is to certify that  <span id="name">Mr./Ms. Rahul Roy</span>, 
-C/o <span id="father"></span> is a permanent resident of 
+C/o <span id="father">Dhirendra Nath Roy</span> is a permanent resident of 
 <span id="address">Dakshin Kathulia, Kalirhat Village: Dakshin Kathulia, P.O.: Kalirhat, P.S.: Dhupguri,</span> Dhupguri Block in the district of 
 <span id="district">Hooghly</span>, 
 Pin Code <span id="pincode">______</span>, West Bengal 
@@ -250,10 +309,18 @@ Sub-Divisional Officer<br>
 </div>
  
 <div class="footer">
-The authenticity of this document can be verified by accessing the URL: https://edistrict.wb.gov.in and then clicking on the<br>"Verification of Digitally Signed Document".
+The authenticity of this document can be verified by accessing the URL: https://edistrict.wb.gov.in and then clicking on the<br>"Verification of Digitally Signed Document" link and keying in the unique number <b><span id="uniqueNo">2100423064075749153</span></b>.   
 </div>
 
 </div>
+  </div>
+
+</div>
+
+
+
+
+
 
 <script>
 function setVal(id,val){
