@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PAN Card Template</title>
+
+<!-- QR Code Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#e6e6e6;
+    padding:10mm;
+}
+
+/* Container */
+
+.card-container{
+    display:flex;
+    gap:5mm;
+}
+
+/* Card */
+
+.card{
+    width:85.6mm;
+    height:54mm;
+    border:0.3mm solid #999;
+    border-radius:2mm;
+    position:relative;
+    padding:3mm;
+    background-size:100% 100%;
+    background-position:center;
+    background-repeat:no-repeat;
+    box-sizing:border-box;
+}
+
+/* Header */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.title{
+    font-size:3mm;
+    font-weight:bold;
+}
+
+.govt{
+    font-size:3.5mm;
+    font-weight:bold;
+    text-align:right;
+}
+
+/* Photo */
+
+.photo{
+    width:14mm;
+    height:14mm;
+   /* border:0.3mm solid #333;*/
+    margin-top:11mm;
+	margin-left:1.5mm;
+}
+
+/* QR */
+
+.qr{
+    width:20mm;
+    height:20mm;
+    position:absolute;
+    right:1.5mm;
+    top:15mm;
+}
+
+.qr canvas{
+    width:100% !important;
+    height:100% !important;
+    image-rendering: pixelated;
+}
+
+/* Details */
+
+.details{
+    text-align:center;
+    margin-top:-16mm;
+    font-size:2.5mm;
+}
+
+.details p{
+    margin:1mm 0;
+}
+
+/* PAN */
+
+.pan{
+    font-weight:bold;
+    font-size:3.3mm;
+    margin:1mm 0;
+}
+
+/* Left info */
+
+.left1{
+    margin-top:5mm;
+    margin-left:1mm;
+    font-size:2.5mm;
+    line-height:0.6;
+}
+
+/* Signature */
+
+.sign{
+    position:absolute;
+    bottom:10mm;
+    left:35mm;
+    font-size:3mm;
+}
+
+/* Back */
+
+.back-text{
+    font-size:2.8mm;
+    line-height:0.8;
+    margin-top:-10mm;
+}
+
+/* Back QR/Icon */
+
+.qback{
+    position:absolute;
+    right:3mm;
+    top:3mm;
+    width:15mm;
+    height:15mm;
+}
+
+/* Form box */
+
+#form123, .form-box{
+    width:90mm;
+    background:#fff;
+    padding:5mm;
+    border-radius:3mm;
+}
+
+/* Print settings */
+
+@media print{
+
+    @page{
+        size:A4;
+        margin:0;
+    }
+
+    body{
+        background:#fff;
+        padding:10mm;
+    }
+
+    /* hide form */
+    input, button, h3, label{
+        display:none !important;
+    }
+
+    .card-container{
+        display:flex;
+        flex-direction:row;
+        flex-wrap:nowrap;
+        gap:5mm;
+        width:180mm;
+        margin:0 auto;
+    }
+
+    .card{
+        border:none;
+        box-shadow:none;
+    }
+}
+
+</style>
+</head>
+
+<body>
+    
+    <div style="background:#fff;padding:15px;margin-bottom:20px;border-radius:8px;width:520px;">
+
+<h3>Enter PAN Details</h3>
+
+<input type="text" id="inputPan" placeholder="Enter PAN Number" style="width:100%;margin:5px 0;"><br>
+
+<input type="text" id="inputName" placeholder="Enter Name" style="width:100%;margin:5px 0;"><br>
+
+<input type="text" id="inputFather" placeholder="Enter Father Name" style="width:100%;margin:5px 0;"><br>
+
+<input type="date" id="inputDob" style="width:100%;margin:5px 0;"><br>
+
+<label>Upload Photo:</label>
+<input type="file" id="photoUpload" accept="image/*"><br><br>
+
+<label>Upload Signature:</label>
+<input type="file" id="signUpload" accept="image/*"><br><br>
+
+<button onclick="updateCard()" style="width:100%;padding:8px;background:#007bff;color:#fff;border:none;">
+Generate Card
+</button>
+ <button onclick="printCard()" 
+style="width:100%;padding:10px;background:green;color:#fff;border:none;margin-top:10px;">
+Print Card
+</button>
+
+</div>
+    
+
+<div class="card-container">
+
+<!-- FRONT SIDE -->
+
+<div class="card" id="frontCard">
+
+
+<div class="photo" id="photoBox"></div>
+
+<div class="details">
+<p style="color:blue;"><b>Permanent Account Number<br>Permanent Account Number Card</b></p>
+<div class="pan" id="panNumber">ABCDE1234F</div>
+</div>
+    
+<div class="left1" >
+<p style="color:blue;">नाम / Name<br><br><b id="name" style="color:black;"> SAMPLE NAME</b></p>
+<p style="color:blue;">पिता का नाम / Father's Name<br><br><b id="father" style="color:black;"> SAMPLE FATHER</b></p>
+<p style="color:blue;">जन्म का तारिख /<br><br>Date of Birth<br><br><b id="dob" style="color:black;">01/01/1990</b></p>
+</div>
+
+<div class="qr" id="qrcode"></div><br><span style="position:absolute;right:3.1mm;top:35mm;font-size:1.9mm;">18052024</span>
+
+<div class="sign" id="signatureBox" style="width:2mm;height:0.1mm;">Signature</div>
+
+</div>
+
+<!-- BACK SIDE -->
+
+<div class="card" id="backCard">
+<br><br>
+    
+<div class="back-text">
+<p style="width:50mm;font-size:2.1mm;line-height:1.2;">
+    <span>इह काण्डे के खेटे / पाने पर कृपया सुचित करें / लौटाएंः</span><br>
+    <span>आयकर पैन सेवा इकाई, प्रोटोयन ईगव टेकनोलोंजेज लिमिटेड</span><br>
+    <span>(फुले नें एनंएसडोएल ई-गवनेंस इंफ्रास्द्रक्चर लिमिटेड)</span><br>
+    <span>चैथो मंजिल, स्थापय चैबर,</span><br>
+    <span>बाणेर रोड, बाणेर,</span><br>
+    <span>पुणे - ४११०४५</span>
+</p><br><br><br>
+
+<p style="font-size:1.8mm;line-height:1.2;">
+<span style="font-size:2.7mm;font-style:italic;">if this card is lost / someone's lost card is found,<br>please inform / return to:</span><br>
+<span>Income Tax PAN Services Unit, Protean eGov Technologies Limited</span><br> 
+<span>1" Flor.Times Tower. Kamala Mills Compound.</span><br>
+<span>Senapati Bapat Marg. Lower Parel,</span><br>  
+<span>Mumbai - 400 614</span><br>
+<span>Tel: 91-20-2721 8080, e-Mail: tininfo@proteantech.in</span><br>
+<span>ito.syste.1@incometax.gov.in. pangrievance@incometax.gov.in</span>
+</p>
+
+
+
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+// ===== UPDATE CARD FROM FORM =====
+function updateCard(){
+
+    let pan = document.getElementById("inputPan").value;
+    let name = document.getElementById("inputName").value;
+    let father = document.getElementById("inputFather").value;
+    let dob = document.getElementById("inputDob").value;
+
+    if(pan) document.getElementById("panNumber").innerText = pan;
+    if(name) document.getElementById("name").innerText = name;
+    if(father) document.getElementById("father").innerText = father;
+
+    if(dob){
+        let d = new Date(dob);
+        let formatted = ("0"+d.getDate()).slice(-2) + "/" +
+                        ("0"+(d.getMonth()+1)).slice(-2) + "/" +
+                        d.getFullYear();
+        document.getElementById("dob").innerText = formatted;
+    }
+
+    generateQR();
+}
+
+
+// ===== QR CODE =====
+function generateQR(){
+    document.getElementById("qrcode").innerHTML = "";
+    
+    let pan = document.getElementById("panNumber").innerText;
+    let name = document.getElementById("name").innerText;
+    let father = document.getElementById("father").innerText;
+    let dob = document.getElementById("dob").innerText;
+
+    let qrData = 
+`PAN: ${pan}
+Name: ${name}
+Father: ${father}
+DOB: ${dob}`;
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: qrData,
+        width: 70,
+        height: 70
+    });
+}
+generateQR();
+
+// ===== PHOTO UPLOAD =====
+document.getElementById("photoUpload").addEventListener("change", function(e){
+    let file = e.target.files[0];
+    if(file){
+        let reader = new FileReader();
+        reader.onload = function(event){
+            document.getElementById("photoBox").innerHTML =
+                `<img src="${event.target.result}" style="width:100%;height:100%;">`;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+
+// ===== SIGNATURE UPLOAD =====
+document.getElementById("signUpload").addEventListener("change", function(e){
+    let file = e.target.files[0];
+    if(file){
+        let reader = new FileReader();
+        reader.onload = function(event){
+            document.getElementById("signatureBox").innerHTML =
+                `<img src="${event.target.result}" style="width:100px;height:20px;">`;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+
+// ===== BACKGROUND =====
+document.getElementById("frontCard").style.backgroundImage =
+"url('pan-1.png')";
+
+document.getElementById("backCard").style.backgroundImage =
+"url('pan-2.png')";
+
+ function printCard(){
+    window.print();
+}
+    
+</script>
+
+</body>
+</html>
