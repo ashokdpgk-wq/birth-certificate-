@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -282,8 +283,10 @@ box-shadow:none;
 <input placeholder="নাম (বাংলা)" oninput="setVal('nameBn',this.value)">
 <input placeholder="Name (English)" oninput="setVal('nameEn',this.value)">
 
-<input placeholder="পিতার / স্বামীর নাম (বাংলা)" oninput="setVal('fatherBn',this.value)">
-<input placeholder="Father Name (English)" oninput="setVal('fatherEn',this.value)">
+<input value="পিতার নাম/ স্বামীর নাম" oninput="setVal('fatherBn0',this.value)">
+  <input placeholder="পিতার / স্বামীর নাম" oninput="setVal('fatherBn',this.value)">
+<input value="Father's Name / Husband's Name" oninput="setVal('fatherEn0',this.value)">
+  <input placeholder="Father's / Husband's Name" oninput="setVal('fatherEn',this.value)">
 
 <input placeholder="লিঙ্গ / Gender" oninput="setVal('gender',this.value)">
 <input placeholder="DOB" oninput="setVal('dob',this.value)">
@@ -340,10 +343,10 @@ box-shadow:none;
 <img id="photoSmall" class="photoSmall">
 
 <div class="info">
-নাম: <b id="nameBn"></b><br>
+নাম: <span id="nameBn"></span><br>
 Name: <span id="nameEn"></span><br>
-স্বামীর নাম: <b id="fatherBn"></b><br>
-Husband's Name: <span id="fatherEn"></span><br>
+  <span id="fatherBn0">স্বামীর নাম</span>: <span id="fatherBn"></span><br>
+<span id="fatherEn0">Husband's Name</span>: <span id="fatherEn"></span><br>
 লিঙ্গ / Gender: <span id="gender"></span><br>
 জম্ম তারিখ / বয়স: <span id="age"></span><br>
 Date of Birth / Age: <span id="dob"></span>
